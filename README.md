@@ -1,4 +1,4 @@
-# Project 8: User interface for uthenticated brevet time calculator service
+# Project 8: User interface for authenticated brevet time calculator service
 
 The goal of this project is to create frontend/UI for Brevet app using Flask-WTF
 and Flask-Login introduced in lectures 08a-flask-login and 08b-flask-wtf. You frontend/UI will reuse the
