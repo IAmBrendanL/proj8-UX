@@ -55,7 +55,7 @@
     <!-- Design on bootstrap grid -->
     <form method="post" action="/save-brevets" role="form">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label>Distance</label>
                 <select name="distance" id="brevet_dist_km">
                     <option value="200">200km</option>
@@ -65,11 +65,14 @@
                     <option value="1000">1000km</option>
                 </select>
             </div> <!-- columns 1--4  -->
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <label>Begins at</label>
                 <input type=date name="begin_date" id="begin_date" value="2017-01-01"/>
                 <input type=time name="begin_time" id="begin_time" value="00:00"/>
             </div> <!-- columns 5-10 -->
+            <div class="col-md-1">
+                <a class="btn btn-danger" href="/logout">Logout</a>
+            </div>
         </div> <!-- row -->
 
         <br/>  <!-- Cosmetic -- a little vertical space -->

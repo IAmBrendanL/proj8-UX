@@ -12,6 +12,7 @@ from Auth.testToken import generate_auth_token, verify_auth_token
 from user import User
 from flask_restful import Resource, Api
 from urllib.parse import urlparse, urljoin
+from datetime import timedelta
 
 ###
 # Globals
@@ -75,7 +76,8 @@ def login():
     if form.validate_on_submit():
         user = User.validate_user(form.username.data, form.password.data)
         if user:
-            result = flask_login.login_user(user=user, remember=form.remember_me.data)
+            result = flask_login.login_user(user=user, remember=form.remember_me.data,
+                                            duration=timedelta(days=7))
             next = flask.request.args.get("next")
             if not is_safe_url(next):
                 return flask.abort(400)
@@ -119,10 +121,6 @@ def _calc_times():
     km = flask.request.args.get('km', 999, type=float)
     brev_dist = flask.request.args.get('dist', 0, type=float)
     begin = flask.request.args.get('begin', arrow.now().isoformat(), type=str)
-
-    app.logger.debug("km={}".format(km))
-    app.logger.debug("request.args: {}".format(flask.request.args))
-
     # compute values and return results
     open_time = acp_times.open_time(km, brev_dist, begin)
     close_time = acp_times.close_time(km, brev_dist, begin)
@@ -326,8 +324,6 @@ def save_brevets():
     close_times = flask.request.form.getlist("close")
     notes = flask.request.form.getlist("notes")
 
-    app.logger.debug(open_times)
-    app.logger.debug(close_times)
     # check valid km and insert documents
     empty = True
     for km, loc, open_time, close_time, note in zip(kms, locations, open_times, close_times, notes):
@@ -335,7 +331,7 @@ def save_brevets():
             empty = False
             open_datetime = arrow.get(open_time, "ddd M/D H:mm")
             close_datetime = arrow.get(close_time, "ddd M/D H:mm")
-            db.btimes.insert_one({'dist': int(km), 'location': loc, "open": open_datetime.datetime,
+            db.btimes.insert_one({'dist': float(km), 'location': loc, "open": open_datetime.datetime,
                                   "close": close_datetime.datetime, "note": note})
 
     # check conditions and flash appropriate message
