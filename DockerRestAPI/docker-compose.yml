@@ -1,0 +1,31 @@
+version: '3'  # version of compose format
+
+services:
+  db:
+   # changed from 3.0.2 as there is an error with "insufficent space"
+   # causing issues when there is space
+   # https://github.com/dockerfile/mongodb/issues/9
+   image: mongo:3.2
+   volumes:
+     - ./db:/db
+
+  web:
+   build: ./dockermongo
+   ports:
+     - 5001:80
+   volumes:
+     - ./dockermongo:/usr/src/app
+   links:
+     - db
+
+  website:
+    image: php:apache
+    volumes:
+      - ./website:/var/www/html
+    ports:
+      - 5000:80  # host:container
+    links:
+      - web # website is not going to work unless web is running
+
+
+

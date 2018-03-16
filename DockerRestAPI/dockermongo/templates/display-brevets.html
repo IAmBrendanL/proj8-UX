@@ -1,0 +1,12 @@
+{% if not records%}
+    <h1>No entries in the database.</h1>
+{% else %}
+    <h1>Controle Point Entries</h1>
+{% endif %}
+{% for item in records %}
+    <h2>Kilometer: {{ item.dist}}</h2>
+    <p>Open Time: {{ item.open }}<p>
+    <p>Close Time: {{ item.close }}<p>
+    <p>Location: {{ item.location }}<p>
+    <p>Notes: {{ item.note }}<p>
+{% endfor %}

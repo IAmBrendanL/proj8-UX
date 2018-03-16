@@ -1,0 +1,19 @@
+{% extends 'base_generic.html' %}
+
+{% block pageTitle %}
+    <h2 align="center">Log In</h2>
+    <hr>
+{% endblock %}
+
+{% block content %}
+<div id="register">
+    <form method="POST" action="/login">
+        {{ form.csrf_token }}
+        <div>{{ form.username.label }}: {{ form.username(class="css_class") }}</div>
+        <div>{{ form.password.label }}: {{ form.password() }}</div>
+        <div>{{ form.remember_me.label }}: {{ form.remember_me }}</div>
+        <button class="btn btn-primary" type="submit">Login</button>
+    </form>
+</div>
+{% endblock %}
+

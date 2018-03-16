@@ -1,0 +1,15 @@
+Flask==0.12.2
+flask_restful==0.3.5
+Flask-HTTPAuth==3.2.3
+click==6.7
+Flask-SQLAlchemy==2.2
+itsdangerous==0.24
+Jinja2==2.9.6
+MarkupSafe==1.0
+passlib==1.7.1
+SQLAlchemy==1.1.11
+Werkzeug==0.12.2
+pymongo
+arrow
+Flask-WTF
+flask_login

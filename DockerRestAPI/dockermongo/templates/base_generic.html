@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>ACP Controle Times</title>
+
+    <!-- 'viewport' is used by bootstrap to respond to device size -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Javascript:  JQuery from a content distribution network (CDN) -->
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+    </script>
+
+    <!-- Bootstrap includes javascript and css  (must follow jquery) -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">
+    </script>
+
+    <!-- moment.js is the JavaScript equivalent of arrow.py -->
+    <script
+            src="{{ url_for('static', filename="js/moment.min.js") }}">
+    </script>
+
+    <link rel="stylesheet" href="/static/css/calc.css"/>
+</head>
+{% block pageTitle %} {% endblock %}
+<body>
+    <div class="container-fluid">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul align="center" class=flashes>
+                    {% for category, message in messages %}
+                        <h2 id="messages" class="{{ category }}">{{ message }}</h2>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        {% block content %} {% endblock %}
+    </div>
+</body>
+</html>

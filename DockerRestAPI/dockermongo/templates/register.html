@@ -1,0 +1,18 @@
+{% extends 'base_generic.html' %}
+
+{% block pageTitle %}
+    <h2 align="center">Sign up</h2>
+    <p class="text text-muted" align="center">Register for a new account</p>
+    <hr>
+{% endblock %}
+
+{% block content %}
+<div id="register">
+    <form method="POST" action="/api/register">
+        <div>{{ form.username.label}}: {{ form.username(class="css_class") }}</div>
+        <div>{{ form.password.label}}: {{ form.password() }}</div>
+        <button class="btn btn-primary" type="submit">Register</button>
+    </form>
+</div>
+{% endblock %}
+
