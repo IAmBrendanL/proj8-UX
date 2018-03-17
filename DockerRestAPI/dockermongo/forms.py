@@ -12,3 +12,7 @@ class LoginForm(FlaskForm):
     password = PasswordField("Password", [validators.DataRequired()])
     remember_me = BooleanField()
 
+
+class AuthorizeForm(FlaskForm):
+    username = StringField("Username", [validators.DataRequired()])
+    password = PasswordField("Password", [validators.DataRequired()])

@@ -1,0 +1,18 @@
+{% extends 'base_generic.html' %}
+
+{% block pageTitle %}
+    <h2 align="center">Generate Token</h2>
+    <hr>
+{% endblock %}
+
+{% block content %}
+<div id="register">
+    <form method="POST" action="/token">
+        {{ form.csrf_token }}
+        <div>{{ form.username.label }}: {{ form.username(class="css_class") }}</div>
+        <div>{{ form.password.label }}: {{ form.password() }}</div>
+        <button class="btn btn-primary" type="submit">Login</button>
+    </form>
+</div>
+{% endblock %}
+

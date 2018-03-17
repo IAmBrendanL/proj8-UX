@@ -69,9 +69,20 @@ def register_user():
     return flask.render_template("register.html", form=form)
 
 
+@app.route("/token", methods=["GET", "POST"])
+def get_token_ui():
+    form = forms.AuthorizeForm()
+    if form.validate_on_submit():
+        user = User.validate_user(form.username.data, form.password.data)
+        if user:
+            token = generate_auth_token(str(user.get_id()), app.secret_key, 15).decode(encoding="utf-8")
+            return flask.jsonify({"token": token, "duration": 15})
+    return flask.render_template("authorize.html", form=form)
+
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    app.logger.debug(flask.session)
     form = forms.LoginForm()
     if form.validate_on_submit():
         user = User.validate_user(form.username.data, form.password.data)
