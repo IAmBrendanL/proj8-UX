@@ -62,10 +62,8 @@ def page_not_found(error):
 
 
 @app.route("/register")
-def register_user():
-    form = forms.RegisterForm()
-    if form.validate_on_submit():
-        return flask.redirect("/_calc_times")
+def register():
+    form = forms.AuthorizeForm()
     return flask.render_template("register.html", form=form)
 
 
@@ -78,6 +76,21 @@ def get_token_ui():
             token = generate_auth_token(str(user.get_id()), app.secret_key, 15).decode(encoding="utf-8")
             return flask.jsonify({"token": token, "duration": 15})
     return flask.render_template("authorize.html", form=form)
+
+
+@app.route("/register_user", methods=["GET", "POST"])
+def register_new_user():
+    form = forms.LoginForm()
+    if form.validate_on_submit():
+        user = User.register_user(form.username.data, form.password.data)
+        if user:
+            result = flask_login.login_user(user=user, remember=form.remember_me.data,
+                                            duration=timedelta(days=7))
+            next = flask.request.args.get("next")
+            if not is_safe_url(next):
+                return flask.abort(400)
+            return flask.redirect(next or flask.url_for('index'))
+    return flask.render_template("register_user.html", form=form)
 
 
 

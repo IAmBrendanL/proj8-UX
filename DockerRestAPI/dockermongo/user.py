@@ -1,6 +1,6 @@
 import pymongo
 from flask_login import UserMixin
-from Auth.password import verify_password
+from Auth.password import verify_password, hash_password
 from bson.objectid import ObjectId
 
 client = pymongo.MongoClient("db", 27017)
@@ -37,4 +37,17 @@ class User(UserMixin):
             return User(name=user["username"], id=user["_id"]) if user else None
         return None
 
+    @staticmethod
+    def register_user(username, password):
+        """
+        Class method, registers a new user if the username does not exist
+        else, creates a new user with username and password
+        """
+        if not username or not password:
+            return None
+        elif db.users.find_one({"username": username}):
+            return None
+        else:
+            id = db.users.insert_one({"username": username, "password_hash": hash_password(password)}).inserted_id
+            return User.get_user_by_id(id)
 
